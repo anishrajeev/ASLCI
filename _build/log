@@ -1,0 +1,16 @@
+# dune exec ASLCI add.lc
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Shared cache location: /Users/anish/.cache/dune/db
+# Workspace root: /Users/anish/codingprojects/OCaml/ASLCI
+# Auto-detected concurrency: 8
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /Users/anish/.opam/5.1.1/bin/ocamlc.opt -config > /var/folders/76/chgc64_9177f_mlhfhhjsrgm0000gn/T/dune_30525e_output
