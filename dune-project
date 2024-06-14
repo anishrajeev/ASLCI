@@ -5,11 +5,11 @@
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github anishrajeev/ASLCI))
 
-(authors "Author Name")
+(authors "Anish Rajeev")
 
-(maintainers "Maintainer Name")
+(maintainers "Anish Rajeev")
 
 (license LICENSE)
 
@@ -17,8 +17,8 @@
 
 (package
  (name ASLCI)
- (synopsis "A short synopsis")
- (description "A longer description")
+ (synopsis "Another Simple Lambda Calculus Interpreter")
+ (description "An interpreter for the typed LC for me to apply the ideas I've learned in TAPL")
  (depends ocaml dune)
  (tags
   (topics "to describe" your project)))

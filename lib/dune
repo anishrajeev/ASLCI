@@ -4,4 +4,4 @@
  (modules Parser))
 
 (library
- (name parsing))
+ (name lib))

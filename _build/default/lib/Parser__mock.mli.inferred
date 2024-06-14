@@ -1,5 +1,22 @@
-type token = VAR of string | RPAREN | LPAREN | LAMBDA | EOF | DOT
+type token =
+    VAR of string
+  | TRUE
+  | THEN
+  | RPAREN
+  | LPAREN
+  | LAMBDA
+  | IF
+  | FALSE
+  | EOF
+  | ELSE
+  | DOT
+  | BOOLTYPE
+  | ARROW
+  | ANNOTATION
 val menhir_begin_marker : int
+val xv_types : Ast.abstype
 val xv_term : Ast.ord
+val xv_simpleterm : Ast.ord
 val xv_program : Ast.ord
+val xv_appterm : Ast.ord
 val menhir_end_marker : int

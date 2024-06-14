@@ -1,0 +1,60 @@
+
+** Conflict (shift/reduce) in state 22.
+** Token involved: ARROW
+** This state is reached from program after reading:
+
+LAMBDA VAR ANNOTATION types ARROW types
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+program 
+term EOF 
+LAMBDA VAR ANNOTATION types DOT term 
+                      (?)
+
+** In state 22, looking ahead at ARROW, shifting is permitted
+** because of the following sub-derivation:
+
+types ARROW types 
+            types . ARROW types 
+
+** In state 22, looking ahead at ARROW, reducing production
+** types -> types ARROW types
+** is permitted because of the following sub-derivation:
+
+types ARROW types // lookahead token appears
+types ARROW types . 
+
+** Conflict (shift/reduce) in state 18.
+** Tokens involved: VAR TRUE LPAREN IF FALSE
+** The following explanations concentrate on token VAR.
+** This state is reached from program after reading:
+
+IF term THEN term ELSE appterm
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+program 
+term EOF 
+appterm 
+(?)
+
+** In state 18, looking ahead at VAR, shifting is permitted
+** because of the following sub-derivation:
+
+simpleterm 
+IF term THEN term ELSE term 
+                       appterm 
+                       appterm simpleterm 
+                               . VAR 
+
+** In state 18, looking ahead at VAR, reducing production
+** term -> appterm
+** is permitted because of the following sub-derivation:
+
+appterm simpleterm // lookahead token appears because simpleterm can begin with VAR
+simpleterm // lookahead token is inherited
+IF term THEN term ELSE term // lookahead token is inherited
+                       appterm . 

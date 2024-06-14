@@ -2,13 +2,17 @@
   open Parser
 }
 
-let white = [' ' '\t' '\n']+
-
-let string = ['a'-'z']+
-
 rule token = parse
-  | white { token lexbuf }
-  | string { VAR (Lexing.lexeme lexbuf) }
+  | [' ' '\t' '\n'] { token lexbuf }
+  | ['a'-'z']+ { VAR (Lexing.lexeme lexbuf) }
+  | "BOOL" { BOOLTYPE }
+  | "IF" { IF }
+  | "THEN" { THEN }
+  | "ELSE" { ELSE }
+  | "#t" { TRUE }
+  | "#f" { FALSE }
+  | ':' { ANNOTATION }
+  | "->" { ARROW }
   | '\\' { LAMBDA }
   | '(' { LPAREN }
   | ')' { RPAREN }
