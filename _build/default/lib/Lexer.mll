@@ -11,6 +11,10 @@ rule token = parse
   | "ELSE" { ELSE }
   | "#t" { TRUE }
   | "#f" { FALSE }
+  | "NAT" { NATTYPE }
+  | "0" { ZERO }
+  | "SUCC" { SUCC }
+  | "PRED" { PRED }
   | ':' { ANNOTATION }
   | "->" { ARROW }
   | '\\' { LAMBDA }

@@ -1,8 +1,12 @@
 type token =
-    VAR of string
+    ZERO
+  | VAR of string
   | TRUE
   | THEN
+  | SUCC
   | RPAREN
+  | PRED
+  | NATTYPE
   | LPAREN
   | LAMBDA
   | IF

@@ -11,6 +11,10 @@
 %token IF
 %token THEN
 %token ELSE
+%token NATTYPE
+%token ZERO
+%token SUCC
+%token PRED
 %token LAMBDA
 %token LPAREN
 %token RPAREN
@@ -30,7 +34,8 @@ program:
   | t=term; EOF { t }
 
 types:
-  | BOOLTYPE; { Boolean }
+  | BOOLTYPE { Boolean }
+  | NATTYPE { Natural }
   | t1=types; ARROW; t2=types { TAbs (t1, t2) }
 
 term:
@@ -47,8 +52,11 @@ simpleterm:
   | LPAREN; t=term; RPAREN { t }
   | TRUE { OBool true }
   | FALSE { OBool false }
-  | IF; c=term; THEN; t1=term; ELSE; t2=term;
+  | ZERO { OZero }
+  | IF; c=term; THEN; t1=term; ELSE; t2=term
     { Oite (c, t1, t2) }
+  | SUCC; LPAREN; t=simpleterm; RPAREN { OSucc t }
+  | PRED; LPAREN; t=simpleterm; RPAREN { OPred t }
 
 
 

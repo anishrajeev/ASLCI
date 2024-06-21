@@ -1,5 +1,5 @@
 
-** Conflict (shift/reduce) in state 22.
+** Conflict (shift/reduce) in state 28.
 ** Token involved: ARROW
 ** This state is reached from program after reading:
 
@@ -13,22 +13,22 @@ term EOF
 LAMBDA VAR ANNOTATION types DOT term 
                       (?)
 
-** In state 22, looking ahead at ARROW, shifting is permitted
+** In state 28, looking ahead at ARROW, shifting is permitted
 ** because of the following sub-derivation:
 
 types ARROW types 
             types . ARROW types 
 
-** In state 22, looking ahead at ARROW, reducing production
+** In state 28, looking ahead at ARROW, reducing production
 ** types -> types ARROW types
 ** is permitted because of the following sub-derivation:
 
 types ARROW types // lookahead token appears
 types ARROW types . 
 
-** Conflict (shift/reduce) in state 18.
-** Tokens involved: VAR TRUE LPAREN IF FALSE
-** The following explanations concentrate on token VAR.
+** Conflict (shift/reduce) in state 24.
+** Tokens involved: ZERO VAR TRUE SUCC PRED LPAREN IF FALSE
+** The following explanations concentrate on token ZERO.
 ** This state is reached from program after reading:
 
 IF term THEN term ELSE appterm
@@ -41,20 +41,20 @@ term EOF
 appterm 
 (?)
 
-** In state 18, looking ahead at VAR, shifting is permitted
+** In state 24, looking ahead at ZERO, shifting is permitted
 ** because of the following sub-derivation:
 
 simpleterm 
 IF term THEN term ELSE term 
                        appterm 
                        appterm simpleterm 
-                               . VAR 
+                               . ZERO 
 
-** In state 18, looking ahead at VAR, reducing production
+** In state 24, looking ahead at ZERO, reducing production
 ** term -> appterm
 ** is permitted because of the following sub-derivation:
 
-appterm simpleterm // lookahead token appears because simpleterm can begin with VAR
+appterm simpleterm // lookahead token appears because simpleterm can begin with ZERO
 simpleterm // lookahead token is inherited
 IF term THEN term ELSE term // lookahead token is inherited
                        appterm . 

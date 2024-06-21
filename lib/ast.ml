@@ -9,6 +9,9 @@ type ord =
   | OApp of ord*ord
   | OBool of bool
   | Oite of ord*ord*ord
+  | OZero
+  | OSucc of ord
+  | OPred of ord
 
 type nameless =
   | Var of int
@@ -16,6 +19,9 @@ type nameless =
   | App of nameless*nameless
   | Bool of bool
   | Ite of nameless*nameless*nameless
+  | Zero
+  | Succ of nameless
+  | Pred of nameless
 
 let rec toString = function 
   | Var v -> Int.to_string v
@@ -27,5 +33,8 @@ let rec toString = function
   | Ite (c, t1, t2) -> "if " ^
                           (toString c) ^ " then " ^
                           (toString t1) ^ " else " ^
-                          (toString t2)
+                       (toString t2)
+  | Zero -> "0"
+  | Succ i -> "Succ (" ^ (toString i) ^ ")"
+  | Pred i -> "Pred (" ^ (toString i) ^ ")"
   

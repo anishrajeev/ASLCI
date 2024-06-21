@@ -2,10 +2,14 @@
 (* The type of tokens. *)
 
 type token = 
+  | ZERO
   | VAR of (string)
   | TRUE
   | THEN
+  | SUCC
   | RPAREN
+  | PRED
+  | NATTYPE
   | LPAREN
   | LAMBDA
   | IF

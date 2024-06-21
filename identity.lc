@@ -1,1 +1,1 @@
-(\x:BOOL->BOOL. IF x THEN #f ELSE #t) #f
+(\x:NAT. PRED (x)) SUCC (SUCC (0))

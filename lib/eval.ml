@@ -1,4 +1,3 @@
-
 exception WrongArguments of string
 exception Stuck
 
@@ -28,6 +27,9 @@ let rec deBruijner : Ast.ord -> string list -> Ast.nameless =
   | Ast.Oite (c, t1, t2) -> Ast.Ite (deBruijner c nc,
                                      deBruijner t1 nc,
                                      deBruijner t2 nc)
+  | Ast.OZero -> Ast.Zero
+  | Ast.OSucc t -> Ast.Succ (deBruijner t nc)
+  | Ast.OPred t -> Ast.Pred (deBruijner t nc)
   | Ast.OVar v -> Var (lookup v nc)
   | Ast.OAbs (v, t, _) -> Ast.Abs (deBruijner t (v::nc))
   | Ast.OApp (t1, t2) -> Ast.App (deBruijner t1 nc,
@@ -35,33 +37,44 @@ let rec deBruijner : Ast.ord -> string list -> Ast.nameless =
 
 let contextGen : Ast.ord -> string list = fun ast ->
   let rec setGen = function
-  | Ast.OVar v -> StringSet.singleton v
-  | Ast.OAbs (id, t, _) -> StringSet.remove id (setGen t)
-  | Ast.OApp (t1, t2) -> StringSet.union (setGen t1) (setGen t2)
-  | Ast.OBool _ -> StringSet.empty
-  | Ast.Oite (t1, t2, t3) -> StringSet.union
-                           (setGen t1)
-                           (StringSet.union
-                              (setGen t2)
-                              (setGen t3))
+    | Ast.OVar v -> StringSet.singleton v
+    | Ast.OAbs (id, t, _) -> StringSet.remove id (setGen t)
+    | Ast.OApp (t1, t2) -> StringSet.union (setGen t1) (setGen t2)
+    | Ast.OBool _ -> StringSet.empty
+    | Ast.Oite (t1, t2, t3) -> StringSet.union
+                                 (setGen t1)
+                                 (StringSet.union
+                                    (setGen t2)
+                                    (setGen t3))
+    | Ast.OZero -> StringSet.empty
+    | Ast.OSucc t -> setGen t
+    | Ast.OPred t -> setGen t
   in
   StringSet.elements (setGen ast)
 
-let isVal : Ast.nameless -> bool = function
+let rec isVal : Ast.nameless -> bool = function
   | Ast.Abs _ -> true
   | Ast.Bool _ -> true
+  | Zero -> true
+  | Ast.Succ t when (isVal t) -> true
   | _ -> false
 
 let shift : int -> Ast.nameless -> Ast.nameless =
   fun d ast ->
   let rec inner = fun c ast ->
     match ast with
-    | Ast.Var i -> if i >= c then Ast.Var (i+d) else Ast.Var i
+    | Ast.Var i ->
+      if i >= c
+      then Ast.Var (i+d)
+      else Ast.Var i
     | Ast.Abs t -> Ast.Abs (inner (c+1) t)
     | Ast.App (t1, t2) -> Ast.App (inner c t1, inner c t2)
     | Ast.Bool b -> Ast.Bool b
     | Ast.Ite (t1, t2, t3) ->
       Ast.Ite (inner c t1, inner c t2, inner c t3)
+    | Ast.Zero -> Ast.Zero
+    | Ast.Succ t -> Ast.Succ (inner c t)
+    | Ast.Pred t -> Ast.Pred (inner c t)
   in
   inner 0 ast
 
@@ -75,6 +88,9 @@ let rec sub : int -> Ast.nameless -> Ast.nameless -> Ast.nameless =
   | Ast.Ite (t1, t2, t3) -> Ast.Ite (sub i s t1,
                                      sub i s t2,
                                      sub i s t3)
+  | Ast.Zero -> Ast.Zero
+  | Ast.Succ t -> Ast.Succ (sub i s t)
+  | Ast.Pred t -> Ast.Pred (sub i s t)
 
 let rec evalstep : Ast.nameless  -> Ast.nameless =
   fun ast -> match ast with
@@ -88,7 +104,11 @@ let rec evalstep : Ast.nameless  -> Ast.nameless =
     | Ast.Ite (c, t2, t3) ->
       (try let c' = evalstep c in
         Ast.Ite (c', t2, t3)
-      with Stuck -> Ast.Ite (c, t2, t3))
+       with Stuck -> Ast.Ite (c, t2, t3))
+    | Ast.Pred (Ast.Zero) -> Ast.Zero
+    | Ast.Pred (Ast.Succ t) when (isVal t) -> t
+    | Ast.Pred t -> Ast.Pred (evalstep t)
+    | Ast.Succ t when (not (isVal t)) -> Ast.Succ (evalstep t)
     | _ -> raise Stuck
 
 let rec eval (ast : Ast.nameless) : Ast.nameless =

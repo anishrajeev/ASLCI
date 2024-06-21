@@ -7,15 +7,6 @@ let rec lookup
   | [] -> raise IllTyped
   | (v', ty')::tcs -> if v = v' then ty' else lookup tcs v
 
-let impromptou : Ast.ord -> string =
-  fun ast ->
-    match ast with
-    | Ast.OVar _ -> "Var"
-    | Ast.OAbs _ -> "Abs"
-    | Ast.OApp _ -> "App"
-    | Ast.OBool _ -> "Bool"
-    | Ast.Oite _ -> "ITE"
-
 let typer : Ast.ord -> Ast.abstype = fun ast ->
   let rec liltyper =
     fun tc ast -> match ast with
@@ -36,6 +27,10 @@ let typer : Ast.ord -> Ast.abstype = fun ast ->
          if (cty == Ast.Boolean) && ty1==ty2
          then ty1
          else raise IllTyped)
+      | Ast.OZero -> Ast.Natural
+      | Ast.OSucc t when ((liltyper tc t) == Ast.Natural) -> Ast.Natural
+      | Ast.OPred t when ((liltyper tc t) == Ast.Natural) -> Ast.Natural
+      | _ -> raise IllTyped
   in
   liltyper [] ast
 
