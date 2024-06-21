@@ -1,1 +1,0 @@
-#(A)nother (S)imple (L)ambda (C)alculus (I)nterpreter
