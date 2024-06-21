@@ -114,7 +114,8 @@ let rec evalstep : Ast.nameless  -> Ast.nameless =
     | Ast.Pred t -> Ast.Pred (evalstep t)
     | Ast.Succ t when (not (isVal t)) -> Ast.Succ (evalstep t)
     | Ast.IsZero Zero -> Ast.Bool true
-    | Ast.IsZero _ -> Ast.Bool false
+    | Ast.IsZero t when (isVal t) -> Ast.Bool false
+    | Ast.IsZero t -> Ast.IsZero (evalstep t)
     | _ -> raise Stuck
 
 let rec eval (ast : Ast.nameless) : Ast.nameless =

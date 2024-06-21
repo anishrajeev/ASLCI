@@ -9,4 +9,4 @@ A function has to give a type to the argument (i.e. "\x:NAT->BOOL. x")<br />
 Some examples are included<br />
 If something is not parsing, throw more parantheses at it :)<br />
 STLC is normalizing so it is not turing complete yet(Can't do recursion etc) <br />
-The addition of recursive types(plan is equirecursive) will fix this!
+The addition of recursive types(plan is equirecursive) will fix this! <br />

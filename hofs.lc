@@ -1,0 +1,3 @@
+((\f: NAT->BOOL. (\x: NAT. IF (f x) THEN #f ELSE #t))
+      (\x: NAT. ISZERO (PRED (PRED (PRED (x))))))
+      (SUCC (SUCC (SUCC (0))))

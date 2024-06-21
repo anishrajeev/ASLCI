@@ -1,4 +1,4 @@
-# dune exec ASLCI identity.lc
+# dune exec ASLCI hofs.lc
 # OCAMLPARAM: unset
 # Shared cache: disabled
 # Shared cache location: /Users/anish/.cache/dune/db
@@ -13,4 +13,4 @@
 #  ; build_dir = In_build_dir "default"
 #  ; instrument_with = []
 #  }
-$ /Users/anish/.opam/5.1.1/bin/ocamlc.opt -config > /var/folders/76/chgc64_9177f_mlhfhhjsrgm0000gn/T/dune_c7e61d_output
+$ /Users/anish/.opam/5.1.1/bin/ocamlc.opt -config > /var/folders/76/chgc64_9177f_mlhfhhjsrgm0000gn/T/dune_fb2a0c_output
