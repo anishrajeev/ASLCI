@@ -30,6 +30,7 @@ let rec deBruijner : Ast.ord -> string list -> Ast.nameless =
   | Ast.OZero -> Ast.Zero
   | Ast.OSucc t -> Ast.Succ (deBruijner t nc)
   | Ast.OPred t -> Ast.Pred (deBruijner t nc)
+  | Ast.OIsZero t -> Ast.IsZero (deBruijner t nc)
   | Ast.OVar v -> Var (lookup v nc)
   | Ast.OAbs (v, t, _) -> Ast.Abs (deBruijner t (v::nc))
   | Ast.OApp (t1, t2) -> Ast.App (deBruijner t1 nc,
@@ -49,6 +50,7 @@ let contextGen : Ast.ord -> string list = fun ast ->
     | Ast.OZero -> StringSet.empty
     | Ast.OSucc t -> setGen t
     | Ast.OPred t -> setGen t
+    | Ast.OIsZero t -> setGen t
   in
   StringSet.elements (setGen ast)
 
@@ -75,6 +77,7 @@ let shift : int -> Ast.nameless -> Ast.nameless =
     | Ast.Zero -> Ast.Zero
     | Ast.Succ t -> Ast.Succ (inner c t)
     | Ast.Pred t -> Ast.Pred (inner c t)
+    | Ast.IsZero t -> Ast.IsZero (inner c t)
   in
   inner 0 ast
 
@@ -91,6 +94,7 @@ let rec sub : int -> Ast.nameless -> Ast.nameless -> Ast.nameless =
   | Ast.Zero -> Ast.Zero
   | Ast.Succ t -> Ast.Succ (sub i s t)
   | Ast.Pred t -> Ast.Pred (sub i s t)
+  | Ast.IsZero t -> Ast.IsZero (sub i s t)
 
 let rec evalstep : Ast.nameless  -> Ast.nameless =
   fun ast -> match ast with
@@ -109,6 +113,8 @@ let rec evalstep : Ast.nameless  -> Ast.nameless =
     | Ast.Pred (Ast.Succ t) when (isVal t) -> t
     | Ast.Pred t -> Ast.Pred (evalstep t)
     | Ast.Succ t when (not (isVal t)) -> Ast.Succ (evalstep t)
+    | Ast.IsZero Zero -> Ast.Bool true
+    | Ast.IsZero _ -> Ast.Bool false
     | _ -> raise Stuck
 
 let rec eval (ast : Ast.nameless) : Ast.nameless =

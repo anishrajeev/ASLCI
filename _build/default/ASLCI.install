@@ -6,3 +6,6 @@ lib: [
 bin: [
   "_build/install/default/bin/ASLCI"
 ]
+doc: [
+  "_build/install/default/doc/ASLCI/README.md"
+]

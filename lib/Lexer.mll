@@ -15,6 +15,7 @@ rule token = parse
   | "0" { ZERO }
   | "SUCC" { SUCC }
   | "PRED" { PRED }
+  | "ISZERO" { ISZERO }
   | ':' { ANNOTATION }
   | "->" { ARROW }
   | '\\' { LAMBDA }

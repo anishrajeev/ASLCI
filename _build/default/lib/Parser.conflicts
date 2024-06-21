@@ -1,5 +1,5 @@
 
-** Conflict (shift/reduce) in state 28.
+** Conflict (shift/reduce) in state 32.
 ** Token involved: ARROW
 ** This state is reached from program after reading:
 
@@ -13,21 +13,21 @@ term EOF
 LAMBDA VAR ANNOTATION types DOT term 
                       (?)
 
-** In state 28, looking ahead at ARROW, shifting is permitted
+** In state 32, looking ahead at ARROW, shifting is permitted
 ** because of the following sub-derivation:
 
 types ARROW types 
             types . ARROW types 
 
-** In state 28, looking ahead at ARROW, reducing production
+** In state 32, looking ahead at ARROW, reducing production
 ** types -> types ARROW types
 ** is permitted because of the following sub-derivation:
 
 types ARROW types // lookahead token appears
 types ARROW types . 
 
-** Conflict (shift/reduce) in state 24.
-** Tokens involved: ZERO VAR TRUE SUCC PRED LPAREN IF FALSE
+** Conflict (shift/reduce) in state 26.
+** Tokens involved: ZERO VAR TRUE SUCC PRED LPAREN ISZERO IF FALSE
 ** The following explanations concentrate on token ZERO.
 ** This state is reached from program after reading:
 
@@ -41,7 +41,7 @@ term EOF
 appterm 
 (?)
 
-** In state 24, looking ahead at ZERO, shifting is permitted
+** In state 26, looking ahead at ZERO, shifting is permitted
 ** because of the following sub-derivation:
 
 simpleterm 
@@ -50,7 +50,7 @@ IF term THEN term ELSE term
                        appterm simpleterm 
                                . ZERO 
 
-** In state 24, looking ahead at ZERO, reducing production
+** In state 26, looking ahead at ZERO, reducing production
 ** term -> appterm
 ** is permitted because of the following sub-derivation:
 

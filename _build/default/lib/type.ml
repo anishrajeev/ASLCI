@@ -30,6 +30,8 @@ let typer : Ast.ord -> Ast.abstype = fun ast ->
       | Ast.OZero -> Ast.Natural
       | Ast.OSucc t when ((liltyper tc t) == Ast.Natural) -> Ast.Natural
       | Ast.OPred t when ((liltyper tc t) == Ast.Natural) -> Ast.Natural
+      | Ast.OIsZero t when ((liltyper tc t) == Ast.Natural) ->
+        Ast.Boolean
       | _ -> raise IllTyped
   in
   liltyper [] ast

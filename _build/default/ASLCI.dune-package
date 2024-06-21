@@ -1,4 +1,4 @@
 (lang dune 3.15)
 (name ASLCI)
-(sections (lib .) (bin ../../bin))
-(files (lib (META dune-package opam)) (bin (ASLCI)))
+(sections (lib .) (bin ../../bin) (doc ../../doc/ASLCI))
+(files (lib (META dune-package opam)) (bin (ASLCI)) (doc (README.md)))

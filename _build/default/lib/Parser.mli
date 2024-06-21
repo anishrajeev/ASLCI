@@ -12,6 +12,7 @@ type token =
   | NATTYPE
   | LPAREN
   | LAMBDA
+  | ISZERO
   | IF
   | FALSE
   | EOF

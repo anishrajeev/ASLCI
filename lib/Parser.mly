@@ -15,6 +15,7 @@
 %token ZERO
 %token SUCC
 %token PRED
+%token ISZERO
 %token LAMBDA
 %token LPAREN
 %token RPAREN
@@ -57,6 +58,7 @@ simpleterm:
     { Oite (c, t1, t2) }
   | SUCC; LPAREN; t=simpleterm; RPAREN { OSucc t }
   | PRED; LPAREN; t=simpleterm; RPAREN { OPred t }
+| ISZERO; LPAREN; t=simpleterm; RPAREN { OIsZero t }
 
 
 

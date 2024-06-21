@@ -1,1 +1,1 @@
-(\x:NAT. PRED (x)) SUCC (SUCC (0))
+(\x:NAT. x)

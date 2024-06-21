@@ -12,6 +12,7 @@ type ord =
   | OZero
   | OSucc of ord
   | OPred of ord
+  | OIsZero of ord
 
 type nameless =
   | Var of int
@@ -22,6 +23,7 @@ type nameless =
   | Zero
   | Succ of nameless
   | Pred of nameless
+  | IsZero of nameless
 
 let rec toString = function 
   | Var v -> Int.to_string v
@@ -37,4 +39,5 @@ let rec toString = function
   | Zero -> "0"
   | Succ i -> "Succ (" ^ (toString i) ^ ")"
   | Pred i -> "Pred (" ^ (toString i) ^ ")"
+  | IsZero i -> "IsZero " ^ (toString i)
   
